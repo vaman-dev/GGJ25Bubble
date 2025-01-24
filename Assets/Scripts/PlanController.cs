@@ -1,40 +1,58 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlaneController2D : MonoBehaviour
 {
-    public float speed = 5f;         // Speed of the plane
-    public float rotationSpeed = 200f; // Rotation speed of the plane
+    public float thrustForce = 5f;        // Force applied for forward movement
+    public float rotationSpeed = 200f;   // Rotation speed of the plane
+    public float constantSpeed = 5f;     // Constant speed in the x direction
 
-    void Update()
+    private Rigidbody2D rb;
+
+    void Start()
+    {
+        // Get the Rigidbody2D component
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0; // Disable gravity for the plane
+    }
+
+    void FixedUpdate()
     {
         HandleMovement();
+        MaintainConstantSpeed();
     }
 
     private void HandleMovement()
     {
-        // Forward movement
-        if (Input.GetKey(KeyCode.W))
+        // Apply thrust force in the forward direction (right side of the sprite)
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+            rb.AddForce(transform.right * thrustForce);
         }
 
-        // Backward movement (disabled to prevent moving in the opposite direction)
-        // Uncomment the following lines if you want to allow backward movement.
-        // if (Input.GetKey(KeyCode.S))
-        // {
-        //     transform.Translate(-Vector2.right * speed * Time.deltaTime);
-        // }
+        // Apply thrust force in the backward direction (reverse movement)
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rb.AddForce(-transform.right * thrustForce);
+        }
 
         // Rotate clockwise
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
+            rb.rotation -= rotationSpeed * Time.deltaTime;
         }
 
         // Rotate counter-clockwise
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+            rb.rotation += rotationSpeed * Time.deltaTime;
         }
+    }
+
+    private void MaintainConstantSpeed()
+    {
+        // Maintain constant velocity in the x direction
+        Vector2 currentVelocity = rb.velocity;
+        rb.velocity = new Vector2(constantSpeed, currentVelocity.y);
     }
 }
