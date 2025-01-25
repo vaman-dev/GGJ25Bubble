@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TeleportToTopLeft : MonoBehaviour
+public class TeleportToTopLeftCorner : MonoBehaviour
 {
     public Camera mainCamera; // Reference to the Camera
     public Transform objectToTeleport; // Reference to the object you want to teleport
@@ -12,10 +12,10 @@ public class TeleportToTopLeft : MonoBehaviour
             mainCamera = Camera.main; // Use the main camera if no reference is set
         }
 
-        TeleportToTopLeftCorner();
+        TeleportToCorner();
     }
 
-    void TeleportToTopLeftCorner()
+    void TeleportToCorner()
     {
         // Get the top-left corner in world space
         Vector3 topLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane));
