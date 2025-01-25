@@ -15,9 +15,9 @@ public class DestroyOnCollision : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other) // 2D collision
     {
-        // Check if the other GameObject has the tag "data"
+        // Check if the other GameObject has the tag "Player"
         if (other.CompareTag("Player"))
         {
             // Play the sound effect
@@ -26,8 +26,10 @@ public class DestroyOnCollision : MonoBehaviour
                 audioSource.PlayOneShot(destroySound);
             }
 
-            // Destroy the other GameObject after the sound finishes playing
-            Destroy(other.gameObject, destroySound.length);
+            Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
+
+            // Destroy the GameObject after the sound finishes playing
+            Destroy(gameObject, destroySound != null ? destroySound.length : 0);
         }
     }
 }
