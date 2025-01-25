@@ -19,6 +19,6 @@ public class SceneChangeonMuktiClick : MonoBehaviour
 
     public void MuktiClick()
     {
-        SceneManager.LoadScene("Dummy Scene");
+        SceneManager.LoadScene("BuggedWindows");
     }
 }
