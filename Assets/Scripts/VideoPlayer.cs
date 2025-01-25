@@ -45,7 +45,7 @@ public class PasswordVideoManager : MonoBehaviour
             if (videoPlayer != null)
             {
                 // Load the video clip from Resources folder
-                VideoClip videoClip = Resources.Load<VideoClip>("VideosVideoplayback");  // Replace with your actual video name without extension
+                VideoClip videoClip = Resources.Load<VideoClip>("Videos/Videoplayback");  // Replace with your actual video name without extension
 
                 if (videoClip != null)
                 {
