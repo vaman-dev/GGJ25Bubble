@@ -23,10 +23,10 @@ public class PlaneController2D : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure required components are attached
+        // Ensure required components are attached   
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
+     
         if (spriteRenderer == null)
         {
             spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
