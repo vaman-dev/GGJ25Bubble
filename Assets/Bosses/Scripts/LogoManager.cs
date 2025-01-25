@@ -4,37 +4,36 @@ using UnityEngine;
 public class LogoManager : MonoBehaviour
 {
     public LogoPart[] logoParts; // Array of all the parts of the XP logo
+    public Transform player; // Reference to the player
 
     private void Start()
     {
+        foreach (LogoPart part in logoParts)
+        {
+            part.player = player; // Assign the player reference
+        }
         StartCoroutine(AnimateLogoParts());
     }
 
     private IEnumerator AnimateLogoParts()
     {
-        // Loop through each part of the logo
         foreach (LogoPart part in logoParts)
         {
-            // Deactivate all parts first
+            // Deactivate all other parts
             foreach (LogoPart otherPart in logoParts)
             {
                 otherPart.gameObject.SetActive(false);
             }
 
-            // Activate the current part
+            // Activate the current part and start its animation
             part.gameObject.SetActive(true);
-            
-            // Start the animation for the current part
             part.StartAnimation();
 
-            // Wait for the animation to complete before moving to the next part
-            yield return new WaitForSeconds(3f); // Adjust delay based on animation time
-        }
-
-        // Optionally deactivate all parts after the animation sequence
-        foreach (LogoPart part in logoParts)
-        {
-            part.gameObject.SetActive(false);
+            // Wait until the current logo part is destroyed
+            while (!part.IsDestroyed)
+            {
+                yield return null; // Wait until the condition is met
+            }
         }
     }
 }
