@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro; // Import TextMeshPro namespace
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class LoginManagerTMP : MonoBehaviour
 {
     [SerializeField] private TMP_InputField passwordInputField; // Reference to the TMP InputField
@@ -15,13 +15,14 @@ public class LoginManagerTMP : MonoBehaviour
         loginButton.onClick.AddListener(CheckPassword);
     }
 
-    private void CheckPassword()
+    public  void CheckPassword()
     {
         string enteredPassword = passwordInputField.text;
 
         if (enteredPassword == correctPassword)
         {
             Debug.Log("Login Successful!");
+             
             // Add your logic for successful login here
         }
         else
