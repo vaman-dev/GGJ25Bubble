@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passwordInputField: {fileID: 1936373047}
-  videoPlayer: {fileID: 0}
+  videoPlayer: {fileID: 1701552382}
   correctPassword: '********'
   backgroundCanvas: {fileID: 95477527}
   videoCanvas: {fileID: 172101237}
@@ -1003,16 +1003,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1936373050}
-        m_TargetAssemblyTypeName: LoginManagerTMP, Assembly-CSharp
-        m_MethodName: ShakeScreen
+      - m_Target: {fileID: 172101237}
+        m_TargetAssemblyTypeName: PasswordVideoManager, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: PlaneController
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 172101242}
@@ -1024,7 +1024,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: PlaneController
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1347789742
@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: 736088cc45d645441bd64552cbdbf139, type: 2}
+  m_Texture: {fileID: 8400000, guid: 28db9b2f2434a1c46812db8fe6a980de, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1197,7 +1197,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: 736088cc45d645441bd64552cbdbf139, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 28db9b2f2434a1c46812db8fe6a980de, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>

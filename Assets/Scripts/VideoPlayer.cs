@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PasswordVideoManager : MonoBehaviour
 {
@@ -54,6 +55,10 @@ public class PasswordVideoManager : MonoBehaviour
                     videoPlayer.clip = videoClip;  // Assign the loaded video clip to the VideoPlayer
                     videoPlayer.Play();  // Start playing the video
                     Debug.Log("Playing video...");
+
+                    // Wait for video to complete (blocking execution until it's done)
+                    float videoLength = (float)videoClip.length;
+                    Invoke(nameof(LoadNextScene), videoLength);
                 }
                 else
                 {
@@ -69,5 +74,10 @@ public class PasswordVideoManager : MonoBehaviour
         {
             Debug.Log("Incorrect password! Access denied.");
         }
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene("AshKaScene");
     }
 }
