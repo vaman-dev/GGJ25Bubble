@@ -9,50 +9,25 @@ public class PlaneController2D : MonoBehaviour
     public float gravityForce = 9.81f;     // Gravity force to pull the plane downwards
     public Sprite destroyedSprite;         // Sprite to display when the plane is destroyed
     public AudioClip destroySound;         // Sound effect to play when the plane is destroyed
-    public float bottomOffset = 0.5f;        // Offset from the bottom of the screen in world units
+    public float bottomOffset = 0.5f;      // Offset from the bottom of the screen in world units
 
     private Rigidbody2D rb;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private bool isDestroyed = false;
-    private Vector2 screenBounds;
     private bool isControlEnabled = false;
-
-    private static int currentPlaneIndex = 0; // Tracks the active plane index
-    private static PlaneController2D[] allPlanes; // Cache all planes for better performance
 
     private void Awake()
     {
-        // Ensure required components are attached   
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-     
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-            Debug.LogWarning($"SpriteRenderer was missing and has been added to {gameObject.name}");
-        }
-
+        // spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
     {
-        rb.gravityScale = 0; // Disable default gravity
-        rb.velocity = transform.right * forwardSpeed; // Set initial velocity
-
-        // Calculate screen bounds in world space
-        Camera mainCamera = Camera.main;
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
-
-        // Cache all planes on the first plane's Start call
-        if (allPlanes == null || allPlanes.Length == 0)
-        {
-            allPlanes = FindObjectsOfType<PlaneController2D>();
-        }
-
-        // Enable control for the active plane
-        EnableControl(planeIndex == currentPlaneIndex);
+        rb.gravityScale = 0; // Disable gravity at the start
+        rb.velocity = Vector2.zero; // Set initial velocity to 0
     }
 
     private void Update()
@@ -60,8 +35,6 @@ public class PlaneController2D : MonoBehaviour
         if (isControlEnabled && !isDestroyed)
         {
             HandleRotation();
-            HandleYAxisFlip();
-            KeepPlaneOnScreen();
         }
     }
 
@@ -93,31 +66,29 @@ public class PlaneController2D : MonoBehaviour
         transform.Rotate(0, 0, rotationInput * rotationSpeed * Time.deltaTime);
 
         // Maintain constant forward velocity
-        if (rb != null)
+        rb.velocity = transform.right * forwardSpeed;
+    }
+
+    public void EnableControl(bool enable)
+    {
+        isControlEnabled = enable;
+        if (!enable)
         {
+            // Stop movement when control is disabled
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            // Activate movement when control is enabled
             rb.velocity = transform.right * forwardSpeed;
+            rb.gravityScale = 1; // Enable gravity
         }
     }
 
-    private void HandleYAxisFlip()
+    private void OnBecameInvisible()
     {
-        float zAngle = transform.eulerAngles.z;
-        if (zAngle > 180) zAngle -= 360;
-
-        Vector3 localScale = transform.localScale;
-        localScale.y = Mathf.Abs(localScale.y) * (Mathf.Abs(zAngle) > 90 ? -1 : 1);
-        transform.localScale = localScale;
-    }
-
-    private void KeepPlaneOnScreen()
-    {
-        Vector3 position = transform.position;
-
-        // Apply the bottom offset
-        float minYWithOffset = -screenBounds.y + bottomOffset;
-
-        // Destroy the plane if it goes off-screen, considering the offset
-        if (position.x < -screenBounds.x || position.x > screenBounds.x || position.y < minYWithOffset || position.y > screenBounds.y)
+        if (!isDestroyed && isControlEnabled)
         {
             TriggerDestruction();
         }
@@ -125,23 +96,12 @@ public class PlaneController2D : MonoBehaviour
 
     private void TriggerDestruction()
     {
-        if (isDestroyed) return;
-
         isDestroyed = true;
 
         // Replace the sprite with the destroyed version
         if (destroyedSprite != null && spriteRenderer != null)
         {
             spriteRenderer.sprite = destroyedSprite;
-
-            Vector3 originalScale = transform.localScale;
-            Vector2 originalSize = spriteRenderer.sprite.bounds.size;
-            Vector2 destroyedSize = destroyedSprite.bounds.size;
-
-            float scaleX = originalScale.x * (originalSize.x / destroyedSize.x);
-            float scaleY = originalScale.y * (originalSize.y / destroyedSize.y);
-
-            transform.localScale = new Vector3(scaleX, scaleY, originalScale.z);
         }
 
         // Play destruction sound
@@ -151,51 +111,11 @@ public class PlaneController2D : MonoBehaviour
         }
 
         rb.velocity = Vector2.zero;
-        rb.gravityScale = 2f; // Make it fall faster
-        rb.angularVelocity = 0;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.gravityScale = 2f;
 
         Destroy(gameObject, 3f);
 
-        // Move to the next plane
-        if (planeIndex == currentPlaneIndex)
-        {
-            Invoke(nameof(EnableNextPlane), 0.5f);
-        }
-    }
-
-    private void EnableNextPlane()
-    {
-        if (allPlanes == null || allPlanes.Length == 0)
-            return;
-
-        // Skip destroyed planes
-        do
-        {
-            currentPlaneIndex++;
-        } while (currentPlaneIndex < allPlanes.Length && allPlanes[currentPlaneIndex] == null);
-
-        // Enable the next plane if it exists
-        if (currentPlaneIndex < allPlanes.Length && allPlanes[currentPlaneIndex] != null)
-        {
-            allPlanes[currentPlaneIndex].EnableControl(true);
-        }
-    }
-
-    public void EnableControl(bool enable)
-    {
-        if (rb == null) return; // Safeguard against accessing a destroyed Rigidbody2D
-
-        isControlEnabled = enable;
-
-        if (!enable)
-        {
-            rb.velocity = Vector2.zero;
-            rb.gravityScale = 0;
-        }
-        else
-        {
-            rb.velocity = transform.right * forwardSpeed;
-        }
+        // Notify PlaneManager to activate the next plane
+        PlaneManager.Instance.ActivateNextPlane();
     }
 }
