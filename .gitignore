@@ -10,12 +10,7 @@ MemoryCaptures/
 
 
 
-# Unity auto-generated meta files
-*.pidb.meta
-*.pidb
-
-# User-specific
-UserSettings/
+/hello
 
 # OS-generated
 .DS_Store
