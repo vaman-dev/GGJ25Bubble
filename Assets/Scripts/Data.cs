@@ -4,9 +4,18 @@ public class BouncingObject : MonoBehaviour
 {
     private Rigidbody2D rb;
 
+    [Header("Random Velocity Range")]
+    public Vector2 xVelocityRange = new Vector2(-5f, 5f); // Range for horizontal velocity
+    public Vector2 yVelocityRange = new Vector2(-5f, 5f); // Range for vertical velocity
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Assign a random initial velocity
+        float randomXVelocity = Random.Range(xVelocityRange.x, xVelocityRange.y);
+        float randomYVelocity = Random.Range(yVelocityRange.x, yVelocityRange.y);
+        rb.velocity = new Vector2(randomXVelocity, randomYVelocity);
     }
 
     private void Update()
@@ -34,4 +43,3 @@ public class BouncingObject : MonoBehaviour
         transform.position = position;
     }
 }
-   
