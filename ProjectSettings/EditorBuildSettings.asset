@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/AshKaScene.unity
     guid: fcbaa2ef7e9dc1c4f80c34df3f441c11
   - enabled: 0
-    path: Assets/Ash ke assests/Extra scenes/Dummy Scene.unity
+    path: Assets/Ash ke assests/Extra scenes/Antivirus.unity
     guid: 49cf4b3d0a1a7664d90707f2a76480e4
   - enabled: 1
     path: Assets/Scenes/ApoorvaKaScene.unity
