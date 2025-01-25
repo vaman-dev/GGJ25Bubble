@@ -24,6 +24,8 @@ public class BoxColliderClickHandler : MonoBehaviour
     
     public GameObject targetObject12; // Assign the object to activate in the Inspector
 
+    public GameObject targetObject13; // Assign the object to activate in the Inspector
+
     [SerializeField] private float delay = 0.5f;
 
 
@@ -61,6 +63,9 @@ public class BoxColliderClickHandler : MonoBehaviour
                 targetObject11.SetActive(true);
                 yield return new WaitForSeconds(delay);
                 targetObject12.SetActive(true);
+
+                yield return new WaitForSeconds(2f);
+                targetObject13.SetActive(true);
             
 
             }
