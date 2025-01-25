@@ -20,7 +20,6 @@ public class PlaneController2D : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        // spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
@@ -89,6 +88,22 @@ public class PlaneController2D : MonoBehaviour
     private void OnBecameInvisible()
     {
         if (!isDestroyed && isControlEnabled)
+        {
+            TriggerDestruction();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!isDestroyed && collision.collider.CompareTag("munition"))
+        {
+            TriggerDestruction();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!isDestroyed && other.CompareTag("munition"))
         {
             TriggerDestruction();
         }
