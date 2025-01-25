@@ -7,6 +7,7 @@ public class LoginManagerTMP : MonoBehaviour
     [SerializeField] private TMP_InputField passwordInputField; // Reference to the TMP InputField
     [SerializeField] private Button loginButton; // Reference to the Login Button
     [SerializeField] private string correctPassword = "********"; // Set your correct password here
+    [SerializeField] private ShakeObject objectToShake; // Reference to the object to shake (in Unity Inspector)
 
     void Start()
     {
@@ -26,7 +27,15 @@ public class LoginManagerTMP : MonoBehaviour
         else
         {
             Debug.Log("Incorrect Password! Try again.");
-            // Add your logic for failed login here (e.g., show error message)
+            // Shake the object when the password is incorrect
+            if (objectToShake != null)
+            {
+                objectToShake.StartShake();
+            }
+            else
+            {
+                Debug.LogError("ShakeObject reference is not assigned.");
+            }
         }
     }
 }
