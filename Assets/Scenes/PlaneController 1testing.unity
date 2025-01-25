@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 509485683}
   m_Layer: 0
   m_Name: PlaneController (3)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 744572200}
   m_Layer: 0
   m_Name: PlaneController (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -977,6 +977,8 @@ MonoBehaviour:
   spawnInterval: 5
   spawnRange: {x: -2, y: 2}
   throwForceRange: {x: 5, y: 10}
+  trigger: {fileID: 0}
+  Started: 0
 --- !u!4 &1295177628
 Transform:
   m_ObjectHideFlags: 0
@@ -1220,7 +1222,7 @@ GameObject:
   - component: {fileID: 1629359589}
   m_Layer: 0
   m_Name: PlaneController (4)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
