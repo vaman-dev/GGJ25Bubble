@@ -7,10 +7,16 @@ public class Spawner : MonoBehaviour
     public float spawnInterval = 1f; // Interval between spawns
     public Vector2 spawnRange = new Vector2(-8f, 8f); // Horizontal spawn range
     public Vector2 throwForceRange = new Vector2(5f, 10f); // Force range for throwing
+    public GameObject trigger  ; 
+    public bool Started = false ; 
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(SpawnObjects());
+        if(!Started &&  trigger == null){
+            StartCoroutine(SpawnObjects());
+            Started = true ; 
+        }
+
     }
 
     private IEnumerator SpawnObjects()   
