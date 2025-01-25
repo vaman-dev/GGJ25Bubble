@@ -1,80 +1,201 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
 public class PlaneController2D : MonoBehaviour
 {
-    public float forwardSpeed = 5f;      // Constant forward speed in the local X direction
-    public float rotationSpeed = 200f;  // Rotation speed of the plane
-    public float gravityForce = 9.81f;  // Gravity force to pull the plane downwards
+    public int planeIndex;                 // Unique index for each plane
+    public float forwardSpeed = 5f;        // Constant forward speed in the local X direction
+    public float rotationSpeed = 200f;     // Rotation speed of the plane
+    public float gravityForce = 9.81f;     // Gravity force to pull the plane downwards
+    public Sprite destroyedSprite;         // Sprite to display when the plane is destroyed
+    public AudioClip destroySound;         // Sound effect to play when the plane is destroyed
+    public float bottomOffset = 0.5f;        // Offset from the bottom of the screen in world units
 
     private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+    private bool isDestroyed = false;
+    private Vector2 screenBounds;
+    private bool isControlEnabled = false;
 
-    void Start()
+    private static int currentPlaneIndex = 0; // Tracks the active plane index
+    private static PlaneController2D[] allPlanes; // Cache all planes for better performance
+
+    private void Awake()
     {
-        // Get the Rigidbody2D component
+        // Ensure required components are attached
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            Debug.LogWarning($"SpriteRenderer was missing and has been added to {gameObject.name}");
+        }
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
         rb.gravityScale = 0; // Disable default gravity
-        rb.velocity = transform.right * forwardSpeed; // Set initial velocity in the local X direction
+        rb.velocity = transform.right * forwardSpeed; // Set initial velocity
+
+        // Calculate screen bounds in world space
+        Camera mainCamera = Camera.main;
+        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+
+        // Cache all planes on the first plane's Start call
+        if (allPlanes == null || allPlanes.Length == 0)
+        {
+            allPlanes = FindObjectsOfType<PlaneController2D>();
+        }
+
+        // Enable control for the active plane
+        EnableControl(planeIndex == currentPlaneIndex);
     }
 
-    void Update()
+    private void Update()
     {
-        HandleRotation();
-        HandleYAxisFlip();
+        if (isControlEnabled && !isDestroyed)
+        {
+            HandleRotation();
+            HandleYAxisFlip();
+            KeepPlaneOnScreen();
+        }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        ApplyGravity();
+        if (isControlEnabled && !isDestroyed)
+        {
+            ApplyGravity();
+        }
     }
 
     private void ApplyGravity()
     {
-        // Apply gravity as a downward force on the Y-axis
         rb.AddForce(Vector2.down * gravityForce);
     }
 
     private void HandleRotation()
     {
-        // Rotate clockwise around Z-axis
+        float rotationInput = 0;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+            rotationInput = -1;
         }
-
-        // Rotate counter-clockwise around Z-axis
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+            rotationInput = 1;
         }
 
-        // Maintain forward velocity in the local X direction relative to the plane's rotation
-        rb.velocity = transform.right * forwardSpeed;
+        transform.Rotate(0, 0, rotationInput * rotationSpeed * Time.deltaTime);
+
+        // Maintain constant forward velocity
+        if (rb != null)
+        {
+            rb.velocity = transform.right * forwardSpeed;
+        }
     }
 
     private void HandleYAxisFlip()
     {
-        // Get the current Z-axis rotation (0 to 360 degrees)
         float zAngle = transform.eulerAngles.z;
+        if (zAngle > 180) zAngle -= 360;
 
-        // Normalize angle to (-180 to 180) range
-        if (zAngle > 180)
+        Vector3 localScale = transform.localScale;
+        localScale.y = Mathf.Abs(localScale.y) * (Mathf.Abs(zAngle) > 90 ? -1 : 1);
+        transform.localScale = localScale;
+    }
+
+    private void KeepPlaneOnScreen()
+    {
+        Vector3 position = transform.position;
+
+        // Apply the bottom offset
+        float minYWithOffset = -screenBounds.y + bottomOffset;
+
+        // Destroy the plane if it goes off-screen, considering the offset
+        if (position.x < -screenBounds.x || position.x > screenBounds.x || position.y < minYWithOffset || position.y > screenBounds.y)
         {
-            zAngle -= 360;
+            TriggerDestruction();
+        }
+    }
+
+    private void TriggerDestruction()
+    {
+        if (isDestroyed) return;
+
+        isDestroyed = true;
+
+        // Replace the sprite with the destroyed version
+        if (destroyedSprite != null && spriteRenderer != null)
+        {
+            spriteRenderer.sprite = destroyedSprite;
+
+            Vector3 originalScale = transform.localScale;
+            Vector2 originalSize = spriteRenderer.sprite.bounds.size;
+            Vector2 destroyedSize = destroyedSprite.bounds.size;
+
+            float scaleX = originalScale.x * (originalSize.x / destroyedSize.x);
+            float scaleY = originalScale.y * (originalSize.y / destroyedSize.y);
+
+            transform.localScale = new Vector3(scaleX, scaleY, originalScale.z);
         }
 
-        // Flip Y-axis if Z-angle exceeds 90 degrees in either direction
-        if (Mathf.Abs(zAngle) > 90)
+        // Play destruction sound
+        if (destroySound != null)
         {
-            Vector3 localScale = transform.localScale;
-            localScale.y = -Mathf.Abs(localScale.y); // Ensure Y is negative
-            transform.localScale = localScale;
+            audioSource.PlayOneShot(destroySound);
+        }
+
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = 2f; // Make it fall faster
+        rb.angularVelocity = 0;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        Destroy(gameObject, 3f);
+
+        // Move to the next plane
+        if (planeIndex == currentPlaneIndex)
+        {
+            Invoke(nameof(EnableNextPlane), 0.5f);
+        }
+    }
+
+    private void EnableNextPlane()
+    {
+        if (allPlanes == null || allPlanes.Length == 0)
+            return;
+
+        // Skip destroyed planes
+        do
+        {
+            currentPlaneIndex++;
+        } while (currentPlaneIndex < allPlanes.Length && allPlanes[currentPlaneIndex] == null);
+
+        // Enable the next plane if it exists
+        if (currentPlaneIndex < allPlanes.Length && allPlanes[currentPlaneIndex] != null)
+        {
+            allPlanes[currentPlaneIndex].EnableControl(true);
+        }
+    }
+
+    public void EnableControl(bool enable)
+    {
+        if (rb == null) return; // Safeguard against accessing a destroyed Rigidbody2D
+
+        isControlEnabled = enable;
+
+        if (!enable)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
         }
         else
         {
-            Vector3 localScale = transform.localScale;
-            localScale.y = Mathf.Abs(localScale.y); // Ensure Y is positive
-            transform.localScale = localScale;
+            rb.velocity = transform.right * forwardSpeed;
         }
     }
 }
