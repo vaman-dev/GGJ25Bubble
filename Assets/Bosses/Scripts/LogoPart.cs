@@ -1,76 +1,153 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class LogoPart : MonoBehaviour
 {
-    public Transform player;                     // Reference to the player
-    public GameObject projectilePrefab;          // Prefab for the projectile
-    public float speed = 3f;                     // Movement speed for chasing the player
-    public float firingInterval = 2f;            // Interval between firing projectiles
-    public float projectileSpeed = 5f;           // Speed of the projectile
+    public bool IsDestroyed { get; private set; } = false; // Tracks if this part is destroyed
+    public float chaseSpeed = 2f; // Speed at which the part chases the player
+    public float stopDistance = 1.5f; // Distance at which the part stops chasing the player
+    public Transform player; // Reference to the player
+    public GameObject projectilePrefab; // The projectile prefab to fire
+    public float fireRate = 2f; // Rate at which projectiles are fired (in seconds)
+    public float projectileSpeed = 10f; // Speed of the projectiles
+    public Transform firePoint; // Point from where the projectiles will be fired
 
-    private Rigidbody2D rb;
-    private bool isAnimating = false;
-    private bool isChasing = false;
+    public float scaleTime = 1.04f; // Time after which scale and collider will change
+    private float scaleTimer = 0f; // Timer for scaling
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    private float timeSinceLastFire = 0f; // Timer to track firing intervals
+
+    private Collider2D logoCollider; // Reference to the collider of the logo
 
     private void Start()
     {
-        // Start firing projectiles periodically
-        InvokeRepeating(nameof(FireProjectile), firingInterval, firingInterval);
+        IsDestroyed = false;
+
+        // Try to find the player object by its tag
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        }
+
+        // Get the collider component
+        logoCollider = GetComponent<Collider2D>();
     }
 
     private void Update()
     {
-        if (isChasing && player != null)
+        if (!IsDestroyed)
         {
+            if (player == null)
+            {
+                player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+            }
             ChasePlayer();
+            timeSinceLastFire += Time.deltaTime;
+
+            // Fire projectiles at the specified rate
+            if (timeSinceLastFire >= fireRate)
+            {
+                FireProjectile();
+                timeSinceLastFire = 0f; // Reset timer
+            }
+
+            // Handle the scale change and collider disabling after the specified time
+            if (scaleTimer >= scaleTime)
+            {
+                ScaleLogo();
+                EnableCollider();
+            }
+            else
+            {
+                scaleTimer += Time.deltaTime; // Increase the scale timer
+                DisableCollider(); // Disable collider during the first 1.04 seconds
+            }
         }
     }
 
     public void StartAnimation()
     {
-        isAnimating = true;
-        // Trigger animation logic here (e.g., Animator trigger)
-        Invoke(nameof(StartChasing), 2f); // Example: Start chasing after animation finishes
-    }
-
-    private void StartChasing()
-    {
-        isAnimating = false;
-        isChasing = true;
+        // Trigger shape-shifting or other animation logic here
+        Debug.Log($"{gameObject.name} is animating and chasing the player!");
+        IsDestroyed = false; // Reset the destroyed state
     }
 
     private void ChasePlayer()
     {
-        Vector2 direction = (player.position - transform.position).normalized;
-        rb.velocity = direction * speed;
+        // Calculate distance to the player
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer > stopDistance)
+        {
+            // Move towards the player
+            Vector3 direction = (player.position - transform.position).normalized;
+            transform.position += direction * chaseSpeed * Time.deltaTime;
+        }
     }
 
     private void FireProjectile()
     {
-        if (player != null)
+        if (projectilePrefab != null && firePoint != null)
         {
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-            Rigidbody2D projRb = projectile.GetComponent<Rigidbody2D>();
+            // Instantiate the projectile at the fire point
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
 
-            Vector2 direction = (player.position - transform.position).normalized;
-            projRb.velocity = direction * projectileSpeed;
+            // Get the direction towards the player and set the projectile's velocity
+            Vector3 directionToPlayer = (player.position - firePoint.position).normalized;
+            Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>(); // Use Rigidbody2D for 2D physics
+            if (projectileRb != null)
+            {
+                projectileRb.velocity = directionToPlayer * projectileSpeed;
+            }
 
-            Destroy(projectile, 5f); // Destroy projectile after 5 seconds
+            // Log the firing action (optional)
+            Debug.Log($"{gameObject.name} fired a projectile towards the player!");
+        }
+        else
+        {
+            Debug.LogWarning("Projectile prefab or fire point is missing!");
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void DestroyPart()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        // Logic to destroy the part (e.g., health system or player attack)
+        Debug.Log($"{gameObject.name} has been destroyed!");
+        IsDestroyed = true;
+        gameObject.SetActive(false); // Deactivate this logo part
+
+        // The next logo part will be activated by LogoManager, so we don't need to handle that here
+    }
+
+    // Detect collision with player in 2D
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
         {
-            // Handle collision with player (e.g., deal damage)
-            Debug.Log("Hit Player!");
+            DestroyPart();
+        }
+    }
+
+    private void ScaleLogo()
+    {
+        // Double the scale of the logo part on the X and Y axes
+        transform.localScale = new Vector3(2f, 2f, 1f);
+        Debug.Log($"{gameObject.name} has scaled up!");
+    }
+
+    private void DisableCollider()
+    {
+        if (logoCollider != null)
+        {
+            logoCollider.enabled = false; // Disable the collider during the first 1.04 seconds
+        }
+    }
+
+    private void EnableCollider()
+    {
+        if (logoCollider != null)
+        {
+            logoCollider.enabled = true; // Enable the collider after 1.04 seconds
         }
     }
 }
