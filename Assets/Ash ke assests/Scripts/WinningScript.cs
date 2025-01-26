@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinningScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void last_Scene()
     {
-        
+        SceneManager.LoadScene("Last Scene Wining");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void first_Scene()
     {
-        
+        SceneManager.LoadScene("Main Fight Area");
     }
 }

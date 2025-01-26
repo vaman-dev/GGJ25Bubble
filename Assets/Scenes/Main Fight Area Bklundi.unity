@@ -1164,6 +1164,8 @@ GameObject:
   - component: {fileID: 495499551}
   - component: {fileID: 495499550}
   - component: {fileID: 495499549}
+  - component: {fileID: 495499553}
+  - component: {fileID: 495499552}
   m_Layer: 5
   m_Name: Redeem
   m_TagString: Untagged
@@ -1210,7 +1212,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1234,7 +1236,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 495499550}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 495499552}
+        m_TargetAssemblyTypeName: WinningScript, Assembly-CSharp
+        m_MethodName: last_Scene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &495499550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1273,6 +1287,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495499547}
   m_CullTransparentMesh: 1
+--- !u!114 &495499552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495499547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c37d1222b320c4bb32892596f1da24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &495499553
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495499547}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aecdd9b176ecd0140ad5d3070a648abd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &511320888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988863094798912088, guid: 92900e3a2b6495348a2f64632877cba7, type: 3}
@@ -3997,6 +4044,8 @@ GameObject:
   - component: {fileID: 1317023286}
   - component: {fileID: 1317023285}
   - component: {fileID: 1317023284}
+  - component: {fileID: 1317023288}
+  - component: {fileID: 1317023287}
   m_Layer: 5
   m_Name: PlayAgain
   m_TagString: Untagged
@@ -4043,7 +4092,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4067,7 +4116,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1317023285}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1317023287}
+        m_TargetAssemblyTypeName: WinningScript, Assembly-CSharp
+        m_MethodName: first_Scene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1317023285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4106,6 +4167,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317023282}
   m_CullTransparentMesh: 1
+--- !u!114 &1317023287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317023282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5c37d1222b320c4bb32892596f1da24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1317023288
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317023282}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e19fc4bb02e9e884cb56caeb68e9efa0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1373203469
 GameObject:
   m_ObjectHideFlags: 0
@@ -4511,7 +4605,7 @@ GameObject:
   - component: {fileID: 1474651804}
   - component: {fileID: 1474651803}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Final Pop Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4715,6 +4809,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   objectToTeleport: {fileID: 1511860838}
+  xOffset: -1
+  yOffset: 0
 --- !u!4 &1511860838
 Transform:
   m_ObjectHideFlags: 0
