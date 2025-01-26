@@ -52,24 +52,25 @@ public class PlaneController2D : MonoBehaviour
         rb.AddForce(Vector2.down * gravityForce);
     }
 
-    private void HandleRotation()
+   private void HandleRotation()
+{
+    float rotationInput = 0;
+
+    // Opposite controls: Right key rotates left, Left key rotates right
+    if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
     {
-        float rotationInput = 0;
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            rotationInput = -1;
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            rotationInput = 1;
-        }
-
-        transform.Rotate(0, 0, rotationInput * rotationSpeed * Time.deltaTime);
-
-        // Maintain constant forward velocity
-        rb.velocity = transform.right * forwardSpeed;
+        rotationInput = 1; // Rotate left
+    }
+    if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+    {
+        rotationInput = -1; // Rotate right
     }
 
+    transform.Rotate(0, 0, rotationInput * rotationSpeed * Time.deltaTime);
+
+    // Maintain constant forward velocity
+    rb.velocity = transform.right * forwardSpeed;
+}
     private void FlipYAxisBasedOnZRotation()
     {
         // Get the Z rotation angle
