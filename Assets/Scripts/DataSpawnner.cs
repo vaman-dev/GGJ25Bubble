@@ -8,8 +8,15 @@ public class Spawner : MonoBehaviour
     public GameObject[] bigBubbles; // Array of big bubbles to manage
     public int maxSpawnCount = 3; // Maximum number of objects to spawn
     public GameObject trigger; // Object used to start spawning
+    public GameObject targetSpawner; // The spawner this spawner will move to
+    public float moveSpeed = 5f; // Speed of movement to the target point
+    public float rotateSpeed = 180f; // Rotation speed during the animation
+    public AudioClip moveSound; // Sound effect during movement
+    public GameObject targetToDestroy; // Object to destroy when the last spawner reaches the point
 
     private bool hasStartedSpawning = false; // Flag to check if spawning has started
+    private bool isMovingToTarget = false; // Flag to indicate movement to the target point
+    private AudioSource audioSource; // AudioSource component
 
     private void Start()
     {
@@ -17,6 +24,13 @@ public class Spawner : MonoBehaviour
         if (bigBubbles == null || bigBubbles.Length == 0)
         {
             Debug.LogError("Big bubbles array is empty or not assigned!");
+            return;
+        }
+
+        // Ensure targetSpawner is assigned
+        if (targetSpawner == null)
+        {
+            Debug.LogError("Target spawner is not assigned!");
             return;
         }
 
@@ -32,6 +46,11 @@ public class Spawner : MonoBehaviour
                 }
             }
         }
+
+        // Set up the audio source for the sound effect
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = moveSound;
+        audioSource.loop = true; // Loop the sound while moving
     }
 
     private void Update()
@@ -45,6 +64,15 @@ public class Spawner : MonoBehaviour
 
         // Manage the colliders of big bubbles dynamically based on the presence of "Chip" objects
         ManageBigBubbleColliders();
+
+        // Move to the target point if triggered
+        if (isMovingToTarget)
+        {
+            MoveToTargetPoint();
+        }
+
+        // If all spawners are destroyed, start moving this spawner to the target
+        CheckAndMoveIfAllSpawnersDestroyed();
     }
 
     // Spawn all objects (chips) instantly
@@ -87,6 +115,67 @@ public class Spawner : MonoBehaviour
                     collider.enabled = !hasActiveChips; // Disable colliders if there are active "Chip" objects
                 }
             }
+        }
+    }
+
+    // Trigger the spawner to move to the target point
+    public void MoveToPoint()
+    {
+        isMovingToTarget = true;
+        if (audioSource && moveSound)
+        {
+            audioSource.Play();
+        }
+    }
+
+    // Move the spawner to the target spawner's position with a rotating animation
+    private void MoveToTargetPoint()
+    {
+        // Check if targetSpawner is valid
+        if (targetSpawner == null)
+        {
+            Debug.LogError("Target spawner is null!");
+            return;
+        }
+
+        // Get the target position (the position of the target spawner)
+        Vector2 targetPosition = targetSpawner.transform.position;
+
+        // Rotate the spawner for the animation
+        transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
+
+        // Move the spawner toward the target position
+        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+        // Check if the spawner has reached the target position
+        if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            isMovingToTarget = false;
+            if (audioSource)
+            {
+                audioSource.Stop();
+            }
+
+            // Destroy the specified target object before destroying this spawner
+            if (targetToDestroy != null)
+            {
+                Destroy(targetToDestroy);
+            }
+
+            // Destroy the spawner itself
+            Destroy(gameObject);
+        }
+    }
+
+    // Check if all spawners are destroyed and trigger the movement if it's the last spawner
+    private void CheckAndMoveIfAllSpawnersDestroyed()
+    {
+        GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+
+        // If there is only one spawner left in the scene (this one), start moving it
+        if (spawners.Length == 1 && !isMovingToTarget)
+        {
+            MoveToPoint(); // Start moving to the target point
         }
     }
 }
