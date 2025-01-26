@@ -1,42 +1,59 @@
 using UnityEngine;
 
-public class BouncingObject : MonoBehaviour
+public class OscillatingObject : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    [Header("Oscillation Settings")]
+    public float speed = 2f; // Speed of oscillation
 
-    [Header("Random Velocity Range")]
-    public Vector2 xVelocityRange = new Vector2(-5f, 5f); // Range for horizontal velocity
-    public Vector2 yVelocityRange = new Vector2(-5f, 5f); // Range for vertical velocity
+    private Transform[] patrolPoints; // Array to store points with tag "Patrol"
+    private Vector3 currentTarget; // Current target position
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        GameObject[] points = GameObject.FindGameObjectsWithTag("Patrol");
 
-        // Disable gravity to ensure constant velocity
-        rb.gravityScale = 0;
+        if (points.Length < 2)
+        {
+            Debug.LogError("At least two GameObjects with the 'Patrol' tag are required!");
+            return;
+        }
 
-        // Assign a random initial velocity
-        float randomXVelocity = Random.Range(xVelocityRange.x, xVelocityRange.y);
-        float randomYVelocity = Random.Range(yVelocityRange.x, yVelocityRange.y);
-        rb.velocity = new Vector2(randomXVelocity, randomYVelocity);
-    }
+        patrolPoints = new Transform[points.Length];
+        for (int i = 0; i < points.Length; i++)
+        {
+            patrolPoints[i] = points[i].transform;
+        }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Reflect the velocity based on the collision normal
-        Vector2 normal = collision.contacts[0].normal;
-        rb.velocity = Vector2.Reflect(rb.velocity, normal);
+        SelectNewTarget();
+
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.isKinematic = true;
+
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null) collider.isTrigger = true;
     }
 
     private void Update()
     {
-        Vector2 position = transform.position;
+        if (patrolPoints == null || patrolPoints.Length < 2) return;
 
-        // Keep the object within the screen bounds
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        position.x = Mathf.Clamp(position.x, -screenBounds.x + Mathf.Abs(transform.localScale.x), screenBounds.x - Mathf.Abs(transform.localScale.x));
-        position.y = Mathf.Clamp(position.y, -screenBounds.y + Mathf.Abs(transform.localScale.y), screenBounds.y - Mathf.Abs(transform.localScale.y));
+        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
 
-        transform.position = position;
+        if (Vector3.Distance(transform.position, currentTarget) < 0.1f)
+        {
+            SelectNewTarget();
+        }
+    }
+
+    private void SelectNewTarget()
+    {
+        Transform randomPoint;
+        do
+        {
+            randomPoint = patrolPoints[Random.Range(0, patrolPoints.Length)];
+        }
+        while (randomPoint.position == currentTarget);
+
+        currentTarget = randomPoint.position;
     }
 }
