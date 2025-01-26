@@ -2,7 +2,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Video;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PasswordVideoManager : MonoBehaviour
 {
@@ -13,6 +12,9 @@ public class PasswordVideoManager : MonoBehaviour
     [SerializeField] private GameObject backgroundCanvas;  // Reference to the background canvas
     [SerializeField] private GameObject videoCanvas;  // Reference to the video player canvas
     [SerializeField] private Button passwordButton;  // Reference to the button that triggers the password check
+
+    [SerializeField] private AudioSource audioSource;  // Reference to the AudioSource component
+    [SerializeField] private AudioClip audioClip;  // Reference to the audio clip to play
 
     private void Start()
     {
@@ -45,7 +47,7 @@ public class PasswordVideoManager : MonoBehaviour
             // Play the video if the VideoPlayer is assigned
             if (videoPlayer != null)
             {
-                // Load the video clip from Resources folder
+                // Load the video clip from the Resources folder
                 VideoClip videoClip = Resources.Load<VideoClip>("Videos/Videoplayback");  // Replace with your actual video name without extension
 
                 if (videoClip != null)
@@ -56,9 +58,17 @@ public class PasswordVideoManager : MonoBehaviour
                     videoPlayer.Play();  // Start playing the video
                     Debug.Log("Playing video...");
 
-                    // Wait for video to complete (blocking execution until it's done)
-                    float videoLength = (float)videoClip.length;
-                    Invoke(nameof(LoadNextScene), videoLength);
+                    // Play audio if the AudioSource is assigned
+                    if (audioSource != null && audioClip != null)
+                    {
+                        audioSource.clip = audioClip;  // Assign the audio clip
+                        audioSource.Play();  // Start playing the audio
+                        Debug.Log("Playing audio...");
+                    }
+                    else
+                    {
+                        Debug.LogError("AudioSource or AudioClip is not assigned!");
+                    }
                 }
                 else
                 {
@@ -74,10 +84,5 @@ public class PasswordVideoManager : MonoBehaviour
         {
             Debug.Log("Incorrect password! Access denied.");
         }
-    }
-
-    private void LoadNextScene()
-    {
-        SceneManager.LoadScene("AshKaScene");
     }
 }
