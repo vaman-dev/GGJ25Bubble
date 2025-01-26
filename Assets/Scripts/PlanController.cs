@@ -35,6 +35,8 @@ public class PlaneController2D : MonoBehaviour
         {
             HandleRotation();
         }
+
+        FlipYAxisBasedOnZRotation();
     }
 
     private void FixedUpdate()
@@ -66,6 +68,27 @@ public class PlaneController2D : MonoBehaviour
 
         // Maintain constant forward velocity
         rb.velocity = transform.right * forwardSpeed;
+    }
+
+    private void FlipYAxisBasedOnZRotation()
+    {
+        // Get the Z rotation angle
+        float zAngle = transform.eulerAngles.z;
+
+        // Normalize the angle to -180 to 180 range for easier comparison
+        zAngle = (zAngle > 180) ? zAngle - 360 : zAngle;
+
+        // Flip Y-axis based on Z angle
+        if (zAngle > 90 || zAngle < -90)
+        {
+            // Flip Y-axis to 180 degrees
+            transform.localScale = new Vector3(transform.localScale.x, -Mathf.Abs(transform.localScale.y), transform.localScale.z);
+        }
+        else
+        {
+            // Reset Y-axis to 0 degrees
+            transform.localScale = new Vector3(transform.localScale.x, Mathf.Abs(transform.localScale.y), transform.localScale.z);
+        }
     }
 
     public void EnableControl(bool enable)

@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public class TeleportToTopLeftCorner : MonoBehaviour
+public class TeleportToTopRightCorner : MonoBehaviour
 {
     public Camera mainCamera; // Reference to the Camera
     public Transform objectToTeleport; // Reference to the object you want to teleport
+    public float xOffset = -1f; // Offset to push the object slightly to the left
+    public float yOffset = 0f;  // Optional y-offset if needed
 
     void Start()
     {
@@ -17,10 +19,14 @@ public class TeleportToTopLeftCorner : MonoBehaviour
 
     void TeleportToCorner()
     {
-        // Get the top-left corner in world space
-        Vector3 topLeftCorner = mainCamera.ViewportToWorldPoint(new Vector3(0, 1, mainCamera.nearClipPlane));
+        // Get the top-right corner in world space
+        Vector3 topRightCorner = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
+
+        // Apply the offset
+        topRightCorner.x += xOffset;
+        topRightCorner.y += yOffset;
 
         // Set the object's position to that point
-        objectToTeleport.position = topLeftCorner;
+        objectToTeleport.position = topRightCorner;
     }
 }
