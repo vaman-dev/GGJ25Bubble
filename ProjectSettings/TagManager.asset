@@ -7,6 +7,8 @@ TagManager:
   - Boundary
   - munition
   - Default
+  - Chip
+  - Spawner
   layers:
   - Default
   - TransparentFX
