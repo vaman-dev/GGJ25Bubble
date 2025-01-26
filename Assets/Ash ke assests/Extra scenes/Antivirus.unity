@@ -202,7 +202,6 @@ GameObject:
   - component: {fileID: 310341888}
   - component: {fileID: 310341887}
   - component: {fileID: 310341886}
-  - component: {fileID: 310341890}
   m_Layer: 5
   m_Name: Anti
   m_TagString: Untagged
@@ -295,7 +294,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 310341890}
+      - m_Target: {fileID: 623477436}
         m_TargetAssemblyTypeName: VidPlayandScene, Assembly-CSharp
         m_MethodName: VidPlay
         m_Mode: 1
@@ -345,20 +344,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310341884}
   m_CullTransparentMesh: 1
---- !u!114 &310341890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310341884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059765399d6cf124cadeecc44ff42b2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  VidCanvas: {fileID: 1237994569}
-  TeleCanvas1: {fileID: 1853405221}
 --- !u!1 &449451374
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,6 +495,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467123607}
   m_CullTransparentMesh: 1
+--- !u!1 &623477435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 623477437}
+  - component: {fileID: 623477436}
+  m_Layer: 0
+  m_Name: SceneManagetr
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &623477436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623477435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 059765399d6cf124cadeecc44ff42b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VidCanvas: {fileID: 1237994569}
+  TeleCanvas1: {fileID: 1853405221}
+--- !u!4 &623477437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623477435}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1057.6711, y: 534.4446, z: 6.8704567}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &921603298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,3 +1264,4 @@ SceneRoots:
   - {fileID: 1237994573}
   - {fileID: 246352231}
   - {fileID: 921603301}
+  - {fileID: 623477437}
