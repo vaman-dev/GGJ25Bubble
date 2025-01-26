@@ -16,6 +16,11 @@ public class LogoManager : MonoBehaviour
         // Get the AudioSource component to play sounds
         audioSource = GetComponent<AudioSource>();
 
+        if (audioSource == null)
+        {
+            Debug.LogError("AudioSource not found on this GameObject.");
+        }
+
         // Assign the player reference to each logo part
         foreach (LogoPart part in logoParts)
         {
@@ -36,6 +41,7 @@ public class LogoManager : MonoBehaviour
             // Activate the first object for the part
             if (firstPartObject != null)
             {
+
                 // Blink the sprite by toggling its active state
                 StartCoroutine(BlinkObject(firstPartObject));
 
@@ -43,6 +49,10 @@ public class LogoManager : MonoBehaviour
                 if (audioSource != null && blinkSound != null)
                 {
                     audioSource.PlayOneShot(blinkSound);
+                }
+                else
+                {
+                    Debug.LogWarning("Blink sound is missing or AudioSource is not set.");
                 }
             }
             else

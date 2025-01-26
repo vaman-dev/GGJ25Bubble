@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Boundary
   - munition
+  - Default
   layers:
   - Default
   - TransparentFX
