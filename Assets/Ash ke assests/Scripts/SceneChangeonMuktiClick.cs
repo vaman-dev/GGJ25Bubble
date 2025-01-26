@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeonMuktiClick : MonoBehaviour
 {
+    [SerializeField] private GameObject TeleCanvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +21,18 @@ public class SceneChangeonMuktiClick : MonoBehaviour
     public void MuktiClick()
     {
         SceneManager.LoadScene("BuggedWindows");
+    }
+
+    public void BubbleTon()
+    {
+        StartCoroutine(LoadingWithDelay());
+        SceneManager.LoadScene("Antivirus");
+    }
+
+    private IEnumerator LoadingWithDelay()
+    {
+        TeleCanvas.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        TeleCanvas.SetActive(false);
     }
 }
