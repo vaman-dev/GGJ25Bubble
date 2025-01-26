@@ -23,8 +23,12 @@ public class CanvasScripting : MonoBehaviour
     [SerializeField] private GameObject Tele;
     [SerializeField] private float delay = 2f; // Duration of the delay
 
+    [SerializeField] private AudioSource audioSource; // Reference to the AudioSource component
+    [SerializeField] private AudioClip buttonClickSound; // Reference to the audio clip for the button click sound
+
     public void OnClick()
     {
+        PlayButtonClickSound(); // Play the sound when the button is clicked
         StartCoroutine(SwitchCanvasWithDelay());
     }
 
@@ -39,5 +43,18 @@ public class CanvasScripting : MonoBehaviour
         Tele.SetActive(false);
 
         TeleCanvas.SetActive(true);
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (audioSource != null && buttonClickSound != null)
+        {
+            audioSource.clip = buttonClickSound; // Assign the sound clip
+            audioSource.Play(); // Play the sound
+        }
+        else
+        {
+            Debug.LogError("AudioSource or ButtonClickSound is not assigned!");
+        }
     }
 }
