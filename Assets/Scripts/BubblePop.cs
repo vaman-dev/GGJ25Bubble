@@ -34,7 +34,7 @@ public class DestroyOnCollision : MonoBehaviour
                 audioSource.PlayOneShot(destroySound);
             }
 
-            Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
+            // Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
 
             // Notify the BubbleManager that a small bubble has been destroyed
             if (bubbleManager != null)

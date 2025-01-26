@@ -1545,7 +1545,7 @@ GameObject:
   - component: {fileID: 730795988}
   - component: {fileID: 730795991}
   - component: {fileID: 730795990}
-  - component: {fileID: 730795992}
+  - component: {fileID: 730795994}
   m_Layer: 0
   m_Name: png-transparent-soap-bubble-blue-water-bubble-blue-bubble-drop-speech-balloon-color-thumbnail-removebg-preview
   m_TagString: Untagged
@@ -1665,7 +1665,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &730795992
+--- !u!114 &730795994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1674,10 +1674,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 730795987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077a9eb29aa0eac41b980c64f81cf4ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e3a994a7786f54db11d536e3dfcb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: 19f425e11bf73a347951d7ecec354cb0, type: 3}
+  destructionCooldown: 10
+  fellowBubbles:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
 --- !u!1 &899723141
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,7 +2331,7 @@ GameObject:
   - component: {fileID: 1083781690}
   - component: {fileID: 1083781693}
   - component: {fileID: 1083781692}
-  - component: {fileID: 1083781694}
+  - component: {fileID: 1083781696}
   m_Layer: 0
   m_Name: png-transparent-soap-bubble-blue-water-bubble-blue-bubble-drop-speech-balloon-color-thumbnail-removebg-preview
     (3)
@@ -2445,7 +2452,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1083781694
+--- !u!114 &1083781696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2454,10 +2461,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083781689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077a9eb29aa0eac41b980c64f81cf4ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e3a994a7786f54db11d536e3dfcb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: 19f425e11bf73a347951d7ecec354cb0, type: 3}
+  destructionCooldown: 10
+  fellowBubbles:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
 --- !u!1 &1160838092
 GameObject:
   m_ObjectHideFlags: 0
@@ -2571,7 +2585,7 @@ GameObject:
   - component: {fileID: 1169479262}
   - component: {fileID: 1169479265}
   - component: {fileID: 1169479264}
-  - component: {fileID: 1169479266}
+  - component: {fileID: 1169479268}
   m_Layer: 0
   m_Name: png-transparent-soap-bubble-blue-water-bubble-blue-bubble-drop-speech-balloon-color-thumbnail-removebg-preview
     (4)
@@ -2692,7 +2706,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1169479266
+--- !u!114 &1169479268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2701,10 +2715,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1169479261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077a9eb29aa0eac41b980c64f81cf4ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e3a994a7786f54db11d536e3dfcb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: 19f425e11bf73a347951d7ecec354cb0, type: 3}
+  destructionCooldown: 10
+  fellowBubbles:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
 --- !u!1 &1183091255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2800,7 +2821,7 @@ GameObject:
   - component: {fileID: 1200280739}
   - component: {fileID: 1200280742}
   - component: {fileID: 1200280741}
-  - component: {fileID: 1200280743}
+  - component: {fileID: 1200280745}
   m_Layer: 0
   m_Name: png-transparent-soap-bubble-blue-water-bubble-blue-bubble-drop-speech-balloon-color-thumbnail-removebg-preview
     (2)
@@ -2921,7 +2942,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1200280743
+--- !u!114 &1200280745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2930,10 +2951,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200280738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077a9eb29aa0eac41b980c64f81cf4ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e3a994a7786f54db11d536e3dfcb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: 19f425e11bf73a347951d7ecec354cb0, type: 3}
+  destructionCooldown: 10
+  fellowBubbles:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
 --- !u!1 &1373203469
 GameObject:
   m_ObjectHideFlags: 0
@@ -3596,6 +3624,56 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1859034533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1859034535}
+  - component: {fileID: 1859034534}
+  m_Layer: 0
+  m_Name: BubbleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1859034534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859034533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38aeab970eeefc340aee02e4de7d1485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bigBubbles:
+  - {fileID: 1169479261}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+--- !u!4 &1859034535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1859034533}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.639678, y: 18.29417, z: -0.042441055}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1866403511
 GameObject:
   m_ObjectHideFlags: 0
@@ -3775,7 +3853,7 @@ GameObject:
   - component: {fileID: 1895379993}
   - component: {fileID: 1895379996}
   - component: {fileID: 1895379995}
-  - component: {fileID: 1895379997}
+  - component: {fileID: 1895379999}
   m_Layer: 0
   m_Name: png-transparent-soap-bubble-blue-water-bubble-blue-bubble-drop-speech-balloon-color-thumbnail-removebg-preview
     (1)
@@ -3896,7 +3974,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1895379997
+--- !u!114 &1895379999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3905,10 +3983,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1895379992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077a9eb29aa0eac41b980c64f81cf4ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e3a994a7786f54db11d536e3dfcb4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   destroySound: {fileID: 8300000, guid: 19f425e11bf73a347951d7ecec354cb0, type: 3}
+  destructionCooldown: 10
+  fellowBubbles:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
 --- !u!1 &1972459562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4096,6 +4181,56 @@ MonoBehaviour:
   throwForceRange: {x: 5, y: 10}
   trigger: {fileID: 1200280738}
   Started: 0
+--- !u!1 &2059324215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2059324217}
+  - component: {fileID: 2059324216}
+  m_Layer: 0
+  m_Name: ColliderManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2059324216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059324215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0aeb5f84572514f90a0a989af3c34d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - {fileID: 730795987}
+  - {fileID: 1895379992}
+  - {fileID: 1200280738}
+  - {fileID: 1083781689}
+  - {fileID: 1169479261}
+--- !u!4 &2059324217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059324215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.76207, y: 15.306709, z: -0.07702216}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2096603779
 GameObject:
   m_ObjectHideFlags: 0
@@ -4238,6 +4373,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2096603782}
+  - {fileID: 1859034535}
   - {fileID: 303680028}
   - {fileID: 1160838096}
   - {fileID: 899723144}
@@ -4245,3 +4381,4 @@ SceneRoots:
   - {fileID: 916686146}
   - {fileID: 1511860838}
   - {fileID: 29551070}
+  - {fileID: 2059324217}
