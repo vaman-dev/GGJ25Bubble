@@ -33,10 +33,12 @@ public class PlaneManager : MonoBehaviour
 
     public void ActivateNextPlane()
     {
-        // Disable the current plane
+        // Disable the current plane and set its tag to default
         if (currentPlaneIndex < allPlanes.Length && allPlanes[currentPlaneIndex] != null)
         {
             allPlanes[currentPlaneIndex].EnableControl(false);
+            // Set the current plane tag to default or another tag
+            allPlanes[currentPlaneIndex].gameObject.tag = "Untagged"; // Or use another tag if needed
         }
 
         // Move to the next plane
@@ -61,6 +63,9 @@ public class PlaneManager : MonoBehaviour
 
         currentPlaneIndex = index;
         allPlanes[index].EnableControl(true);
+        // Set the active plane's tag to "Player"
+        allPlanes[index].gameObject.tag = "Player"; // Set the Player tag
+
         Debug.Log($"Plane {index} activated.");
     }
 

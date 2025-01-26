@@ -3,11 +3,22 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject objectPrefab; // The prefab to spawn
+    public GameObject objectPrefab; // The prefab to spawn (small bubbles)
     public float spawnInterval = 1f; // Interval between spawns
     public Vector2 throwForceRange = new Vector2(5f, 10f); // Force range for throwing
     public GameObject trigger; // Object used to start spawning
     public bool Started = false; // Flag to check if spawning has started
+    private BubbleManager bubbleManager; // Reference to the BubbleManager
+
+    private void Start()
+    {
+        // Find and reference the BubbleManager
+        bubbleManager = FindObjectOfType<BubbleManager>();
+        if (bubbleManager == null)
+        {
+            Debug.LogError("No BubbleManager found in the scene!");
+        }
+    }
 
     private void Update()
     {
@@ -37,6 +48,9 @@ public class Spawner : MonoBehaviour
             {
                 rb.velocity = new Vector2(Random.Range(-1f, 1f), -throwForce);
             }
+
+            // Notify BubbleManager that a small bubble was spawned (and should be tracked for destruction)
+            bubbleManager.OnSmallBubbleDestroyed();
         }
     }
 }

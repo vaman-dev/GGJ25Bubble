@@ -4,6 +4,7 @@ public class DestroyOnCollision : MonoBehaviour
 {
     public AudioClip destroySound; // Assign the sound effect in the inspector
     private AudioSource audioSource;
+    private BubbleManager bubbleManager; // Reference to the BubbleManager
 
     private void Start()
     {
@@ -12,6 +13,13 @@ public class DestroyOnCollision : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        // Get reference to BubbleManager
+        bubbleManager = FindObjectOfType<BubbleManager>();
+        if (bubbleManager == null)
+        {
+            Debug.LogError("No BubbleManager found in the scene!");
         }
     }
 
@@ -26,7 +34,13 @@ public class DestroyOnCollision : MonoBehaviour
                 audioSource.PlayOneShot(destroySound);
             }
 
-            Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
+            // Debug.Log($"{gameObject.name} collided with {other.gameObject.name}");
+
+            // Notify the BubbleManager that a small bubble has been destroyed
+            if (bubbleManager != null)
+            {
+                bubbleManager.OnSmallBubbleDestroyed(); // Track the destruction of a small bubble
+            }
 
             // Destroy the GameObject after the sound finishes playing
             Destroy(gameObject, destroySound != null ? destroySound.length : 0);

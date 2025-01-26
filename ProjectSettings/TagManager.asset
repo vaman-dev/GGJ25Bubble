@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boundary
+  - munition
+  - Default
   layers:
   - Default
   - TransparentFX
