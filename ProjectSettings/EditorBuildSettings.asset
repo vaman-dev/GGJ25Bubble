@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Ash ke assests/Extra scenes/BuggedWindows.unity
     guid: 3bdbda1ee53e1db4188210e9b99154d5
+  - enabled: 1
+    path: Assets/Scenes/Main Fight Area.unity
+    guid: 1a10edd5bd17f7a43af3aa7013d676b2
   m_configObjects: {}
