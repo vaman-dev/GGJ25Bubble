@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;  // Import Scene Management
 
 public class PasswordVideoManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PasswordVideoManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;  // Reference to the AudioSource component
     [SerializeField] private AudioClip audioClip;  // Reference to the audio clip to play
 
+    [SerializeField] private string nextSceneName;  // Name of the scene to load after the video finishes
+
     private void Start()
     {
         // Hide video canvas initially
@@ -29,6 +32,12 @@ public class PasswordVideoManager : MonoBehaviour
         else
         {
             Debug.LogError("Password button is not assigned!");
+        }
+
+        // Attach an event listener to detect when the video finishes playing
+        if (videoPlayer != null)
+        {
+            videoPlayer.loopPointReached += OnVideoFinished;
         }
     }
 
@@ -83,6 +92,22 @@ public class PasswordVideoManager : MonoBehaviour
         else
         {
             Debug.Log("Incorrect password! Access denied.");
+        }
+    }
+
+    // Callback for when the video finishes playing
+    private void OnVideoFinished(VideoPlayer vp)
+    {
+        Debug.Log("Video finished playing. Loading next scene...");
+
+        // Load the next scene
+        if (!string.IsNullOrEmpty(nextSceneName))
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
+        else
+        {
+            Debug.LogError("Next scene name is not specified!");
         }
     }
 }
