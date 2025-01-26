@@ -17,6 +17,7 @@ public class Spawner : MonoBehaviour
     private bool hasStartedSpawning = false; // Flag to check if spawning has started
     private bool isMovingToTarget = false; // Flag to indicate movement to the target point
     private AudioSource audioSource; // AudioSource component
+    private Rigidbody2D rb; // Rigidbody2D component (if available)
 
     private void Start()
     {
@@ -51,6 +52,9 @@ public class Spawner : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = moveSound;
         audioSource.loop = true; // Loop the sound while moving
+
+        // Get the Rigidbody2D component if available
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -65,14 +69,14 @@ public class Spawner : MonoBehaviour
         // Manage the colliders of big bubbles dynamically based on the presence of "Chip" objects
         ManageBigBubbleColliders();
 
-        // Move to the target point if triggered
+        // Check if all big bubbles are destroyed, then start moving this spawner to the target
+        CheckAndMoveIfAllBigBubblesDestroyed();
+
+        // Handle movement if flagged
         if (isMovingToTarget)
         {
             MoveToTargetPoint();
         }
-
-        // If all spawners are destroyed, start moving this spawner to the target
-        CheckAndMoveIfAllSpawnersDestroyed();
     }
 
     // Spawn all objects (chips) instantly
@@ -145,7 +149,14 @@ public class Spawner : MonoBehaviour
         transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
 
         // Move the spawner toward the target position
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        if (rb != null)
+        {
+            rb.MovePosition(Vector2.MoveTowards(rb.position, targetPosition, moveSpeed * Time.deltaTime));
+        }
+        else
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        }
 
         // Check if the spawner has reached the target position
         if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
@@ -167,15 +178,28 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    // Check if all spawners are destroyed and trigger the movement if it's the last spawner
-    private void CheckAndMoveIfAllSpawnersDestroyed()
+    // Check if all big bubbles are destroyed and trigger movement
+    private void CheckAndMoveIfAllBigBubblesDestroyed()
     {
-        GameObject[] spawners = GameObject.FindGameObjectsWithTag("Spawner");
+        bool allDestroyed = true;
 
-        // If there is only one spawner left in the scene (this one), start moving it
-        if (spawners.Length == 1 && !isMovingToTarget)
+        // Check if all elements in the bigBubbles array are null
+        foreach (GameObject bigBubble in bigBubbles)
         {
-            MoveToPoint(); // Start moving to the target point
+            if (bigBubble != null)
+            {
+                allDestroyed = false;
+                break;
+            }
+        }
+
+        Debug.Log("All destroyed: " + allDestroyed);
+
+        // If all are destroyed and not already moving, start moving to the target point
+        if (allDestroyed && !isMovingToTarget)
+        {
+            Debug.Log("Triggering movement to target.");
+            MoveToPoint();
         }
     }
 }
