@@ -9,6 +9,8 @@ TagManager:
   - Default
   - Chip
   - Spawner
+  - Petrol
+  - Patrol
   layers:
   - Default
   - TransparentFX
