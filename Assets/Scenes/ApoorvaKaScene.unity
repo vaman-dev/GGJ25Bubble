@@ -425,6 +425,7 @@ MonoBehaviour:
   passwordButton: {fileID: 1347789741}
   audioSource: {fileID: 172101243}
   audioClip: {fileID: 8300000, guid: 389ea33732a0ba341961b032b8d46587, type: 3}
+  nextSceneName: AshKaScene
 --- !u!82 &172101243
 AudioSource:
   m_ObjectHideFlags: 0

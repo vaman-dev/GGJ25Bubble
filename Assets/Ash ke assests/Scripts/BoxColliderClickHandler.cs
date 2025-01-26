@@ -26,6 +26,8 @@ public class BoxColliderClickHandler : MonoBehaviour
 
     public GameObject targetObject13; // Assign the object to activate in the Inspector
 
+    public GameObject Victory;
+
     [SerializeField] private float delay = 0.5f;
 
 

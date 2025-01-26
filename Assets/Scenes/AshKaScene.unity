@@ -1073,8 +1073,8 @@ MonoBehaviour:
   WindowsCanvas: {fileID: 933435267}
   Tele: {fileID: 395573149}
   delay: 2
-  audioSource: {fileID: 0}
-  buttonClickSound: {fileID: 0}
+  audioSource: {fileID: 1206624195}
+  buttonClickSound: {fileID: 8300000, guid: dfa11e9cd9756d84784899e7c595b536, type: 3}
 --- !u!82 &1206624195
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1082,14 +1082,14 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206624192}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: dfa11e9cd9756d84784899e7c595b536, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1806,6 +1806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 401c8bf2654789d48aad1c36419d4d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TeleCanvas: {fileID: 0}
 --- !u!1 &1788436780
 GameObject:
   m_ObjectHideFlags: 0
