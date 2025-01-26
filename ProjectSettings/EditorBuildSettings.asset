@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Fight Area.unity
     guid: 1a10edd5bd17f7a43af3aa7013d676b2
+  - enabled: 1
+    path: Assets/Scenes/Last Scene Wining.unity
+    guid: cd6e2037e6d350e42a77942228c22552
   m_configObjects: {}
