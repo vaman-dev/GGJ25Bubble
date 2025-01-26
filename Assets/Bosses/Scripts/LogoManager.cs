@@ -18,7 +18,7 @@ public class LogoManager : MonoBehaviour
 
         if (audioSource == null)
         {
-            Debug.LogError("AudioSource not found on this GameObject.");
+            // Debug.LogError("AudioSource not found on this GameObject.");
         }
 
         // Assign the player reference to each logo part

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4317474126448260888}
   - component: {fileID: 8206251839194352979}
   - component: {fileID: 6550846371115089891}
-  - component: {fileID: -8049040435835802507}
   - component: {fileID: 5564100724094703347}
   m_Layer: 0
   m_Name: Chip
@@ -146,35 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdbc1d0ce8bb2446aaa21d51b01b2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xVelocityRange: {x: -5, y: 5}
-  yVelocityRange: {x: -5, y: 5}
---- !u!50 &-8049040435835802507
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4844959534215060638}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  speed: 2
 --- !u!114 &5564100724094703347
 MonoBehaviour:
   m_ObjectHideFlags: 0
